@@ -17,13 +17,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "host.exp.Exponent",
+      "buildNumber": "1.0.0"
     },
     "android": {
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.nicolashadj.Poeti",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

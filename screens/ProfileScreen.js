@@ -2,11 +2,11 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 
-export default function SearchScreen(){
+export default function ProfileScreen(){
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Search poems,writers</Text>
-            <Text>Initial version of the search page.</Text>
+            <Text style={styles.title}>Profile</Text>
+            <Text>Initial version of the profile page.</Text>
         </View>
     );
 }

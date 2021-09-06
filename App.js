@@ -1,29 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
+//Import components from react/expo.
 import React from 'react';
+import * as Expo from 'expo';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Application from 'expo-application';
+
+
 
 import firebase from 'firebase';
 import { firebaseConfig } from './config';
 
 import { NavigationContainer } from '@react-navigation/native';
+import AppContainer from './navigation/NavigationSystem'; 
+import { createStackNavigator } from '@react-navigation/stack';
+import SignUpScreen from './screens/SignUpScreen';
+import HomeScreen from './screens/HomeScreen';
+import ProfessorPage from './screens/ProfessorPage';
 
-import BottomTabNav from './navigation/BottomNavigation'; //Import tab navigator.
+import { MyStack } from './navigation/NavigationSystem';
 
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-
-      <NavigationContainer>
-          <BottomTabNav />
-      </NavigationContainer>
-      
-    </View>
-
+    <NavigationContainer>
+      <MyStack/>
+    </NavigationContainer>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

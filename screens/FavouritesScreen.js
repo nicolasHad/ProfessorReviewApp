@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function FavouritesScreen(){
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Favourited Poems</Text>
+            <Text style={styles.title}>Favourited Professors</Text>
             <Text>Initial version of favorite poems page.</Text>
         </View>
     );
