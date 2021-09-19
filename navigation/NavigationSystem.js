@@ -19,15 +19,16 @@ import NewReview from '../screens/NewReview';
 
 import { Ionicons } from '@expo/vector-icons';
 
+import HeaderComponent from '../components/Header';
+
 const Drawer = createDrawerNavigator();
 
 export function MyDrawer() {
     return (
         <Drawer.Navigator>
         <Drawer.Screen name="Home" component={BottomTabNav} />
-        <Drawer.Screen name="Favourites" component={FavouritesScreen} />
         <Drawer.Screen name="Profile" component={ProfileScreen} />
-        <Drawer.Screen name="Write a review" component={NewReview} />
+        <Drawer.Screen name="Favourites" component={FavouritesScreen} />
         </Drawer.Navigator>
     );
 }
@@ -42,16 +43,22 @@ export function MyStack() {
           headerShown:false,
           }}
         >
-  
+          <Stack.Screen 
+          name="SignUpScreen" 
+          component={SignUpScreen} 
+          options={{ title: 'Feed' }}
+          iconName='Home'
+        />
         <Stack.Screen 
           name="HomeScreen" 
           component={MyDrawer} 
-          options={{ title: 'HomeScreen' }}
+          options={{ title: 'Feed' }}
+          iconName='Home'
         />
         <Stack.Screen 
          name="ProfessorPage" 
          component={ProfessorPage} 
-         options={{ title: 'User Detail' }}
+         options={{ title: 'Reviews' }}
         />
       </Stack.Navigator>
     );
@@ -70,15 +77,10 @@ export default function BottomTabNav() {
 
             if (route.name === 'Home') {
               iconName = 'home';
-            } else if (route.name === 'Liked') {
-              iconName = 'heart';
-            } else if (route.name === 'Write') {
-              iconName = 'add-circle'
             } else if (route.name === 'Professors') {
               iconName = 'search'
             }
 
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -88,7 +90,6 @@ export default function BottomTabNav() {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Liked" component={FavouritesScreen} />
         <Tab.Screen name="Professors" component={ProfessorsList} />
       </Tab.Navigator>
     

@@ -1,11 +1,13 @@
 // screens/UserScreen.js
 
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, View,Text,TextInput} from 'react-native';
+import { StyleSheet, ScrollView, StatusBar, ActivityIndicator, View, Text, TextInput } from 'react-native';
 import { ListItem } from 'react-native-elements'
 import firebase from 'firebase';
-import {Searchbar} from 'react-native-paper';
-import {Avatar, NativeBaseProvider} from 'native-base';
+import { Searchbar } from 'react-native-paper';
+import { Avatar, NativeBaseProvider } from 'native-base';
+import HeaderComponent from '../components/Header';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 class ProfessorsList extends Component {
 
@@ -15,21 +17,21 @@ class ProfessorsList extends Component {
     this.state = {
       isLoading: true,
       profArr: [],
-      profsFiltered:[],
+      profsFiltered: [],
     };
   }
 
   componentDidMount() {
     this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection);
-}
+  }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unsubscribe();
   }
 
   getCollection = (querySnapshot) => {
     const profArr = [];
-    const profsFiltered=[];
+    const profsFiltered = [];
     querySnapshot.forEach((res) => {
       const { fullname, department, email } = res.data();
       profArr.push({
@@ -52,69 +54,70 @@ class ProfessorsList extends Component {
       profArr,
       profsFiltered,
       isLoading: false,
-   });
+    });
   }
 
-  searchProf(textToSearch){
+  searchProf(textToSearch) {
     this.setState({
-      profsFiltered:this.state.profArr.filter(i=>
+      profsFiltered: this.state.profArr.filter(i =>
         i.fullname.toLowerCase().includes(textToSearch.toLowerCase())),
     });
   }
 
   render() {
-    if(this.state.isLoading && !this.fontsLoaded){
-      return(
+    if (this.state.isLoading && !this.fontsLoaded) {
+      return (
         <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E"/>
+          <ActivityIndicator size="large" color="#9E9E9E" />
         </View>
       )
-    }    
+    }
     return (
-      <NativeBaseProvider>
-      <ScrollView style={styles.container}>
-          <Text style={{fontFamily:'Comfortaa',fontSize:30,left:10,
-            top:0,paddingBottom:20}}>List of professors</Text>
+      <SafeAreaProvider>
+        <NativeBaseProvider>
+          <HeaderComponent iconName="list" pageTitle="Professor's list" />
 
-            <Searchbar placeholder="Search Here" onChangeText={text=>{this.searchProf(text)}}/>
-          {
-            this.state.profsFiltered.map((item, i) => {
-              return (
-                <View>
-                <ListItem
-                  key={i}
-                  chevron="true"
-                  bottomDivider
-                  onPress={()=>{
-                      this.props.navigation.navigate('ProfessorPage',{
-                          professorKey:item.key
-                      });
-                  }}
-                >
-                  <Avatar source={{uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg",}}>
-                    {item.fullname.substring(0,2)}
-                  </Avatar> 
-      
-                    <ListItem.Content>
-                      <ListItem.Title>{item.fullname}</ListItem.Title>
-                      <ListItem.Subtitle>{item.department}</ListItem.Subtitle>
-                    </ListItem.Content>
-                </ListItem>
-                </View>
-              );
-            })
-          }
-      </ScrollView>
-      </NativeBaseProvider>
+          <ScrollView style={styles.container}>
+
+            <Searchbar placeholder="Search Here" onChangeText={text => { this.searchProf(text) }} />
+            {
+              this.state.profsFiltered.map((item, i) => {
+                return (
+                  <View>
+                    <ListItem
+                      key={i}
+                      chevron="true"
+                      bottomDivider
+                      onPress={() => {
+                        this.props.navigation.navigate('ProfessorPage', {
+                          professorKey: item.key
+                        });
+                      }}
+                    >
+                      <Avatar source={{ uri: "https://pbs.twimg.com/profile_images/1188747996843761665/8CiUdKZW_400x400.jpg", }}>
+                        {item.fullname.substring(0, 2)}
+                      </Avatar>
+
+                      <ListItem.Content>
+                        <ListItem.Title>{item.fullname}</ListItem.Title>
+                        <ListItem.Subtitle>{item.department}</ListItem.Subtitle>
+                      </ListItem.Content>
+                    </ListItem>
+                  </View>
+                );
+              })
+            }
+          </ScrollView>
+        </NativeBaseProvider>
+      </SafeAreaProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-   flex: 1,
-   paddingTop: 30,
-   alignContent:'center'
+    flex: 1,
+    alignContent: 'center',
   },
   preloader: {
     left: 0,

@@ -31,9 +31,6 @@ export default function BottomTabNav() {
              else if (route.name === 'Professors') {
               iconName = 'search'
             }
-            else if (route.name === 'Liked') {
-              iconName = 'heart';
-            }
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -46,7 +43,6 @@ export default function BottomTabNav() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Professors" component={ProfessorsList} />
-        <Tab.Screen name="Liked" component={FavouritesScreen} />
       </Tab.Navigator>
     
   );
